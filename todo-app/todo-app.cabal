@@ -30,6 +30,7 @@ library
       Flow
       Routes.Routes
       Storage.DB.Queries.DB
+      Storage.DB.Types.DB
       Storage.DB.Types.Todo
       Storage.DB.Types.User
       Storage.DB.Utils

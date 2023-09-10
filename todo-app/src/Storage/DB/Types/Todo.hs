@@ -40,11 +40,11 @@ instance ToJSON Todos where
   toJSON =
     genericToJSON (DU.stripAllLensPrefixOptions {omitNothingFields = True})
 
-userEMod :: 
+todoEMod :: 
     Text 
  -> Text 
  -> B.EntityModification (B.DatabaseEntity be db) be (B.TableEntity TodosT)
-userEMod tableName schema = 
+todoEMod tableName schema = 
  B.setEntitySchema (Just schema) <>
  B.setEntityName tableName <>
  B.modifyTableFields
