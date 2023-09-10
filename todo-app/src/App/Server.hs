@@ -4,4 +4,13 @@ import qualified Routes.Routes as R
 import Servant
 
 todoServer :: Server R.APIs
-todoServer = (R.create :<|> R.update :<|> R.fetchAll :<|> R.getDetails :<|> R.delete) :<|> R.appCheck
+todoServer =  todoServers' 
+
+todoServers' = todoAPI :<|> userAPI :<|> applicationAPI
+
+todoAPI = R.createTodo :<|> R.updateTodo :<|> R.fetchAllTodo :<|> R.getDetailsTodo
+
+userAPI = R.createUser :<|> R.updateUser
+
+applicationAPI = R.appCheck
+

@@ -29,6 +29,7 @@ library
       App.Server
       Flow
       Routes.Routes
+      Storage.API
       Storage.DB.Queries.DB
       Storage.DB.Types.DB
       Storage.DB.Types.Todo
@@ -48,6 +49,7 @@ library
       OverloadedStrings
       RecordWildCards
       StandaloneDeriving
+      DuplicateRecordFields
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       aeson
@@ -83,6 +85,7 @@ executable todo-app-exe
       OverloadedStrings
       RecordWildCards
       StandaloneDeriving
+      DuplicateRecordFields
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
@@ -120,6 +123,7 @@ test-suite todo-app-test
       OverloadedStrings
       RecordWildCards
       StandaloneDeriving
+      DuplicateRecordFields
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
