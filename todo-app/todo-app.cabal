@@ -29,13 +29,26 @@ library
       App.Server
       Flow
       Routes.Routes
+      Storage.DB.Queries.DB
+      Storage.DB.Types.Todo
+      Storage.DB.Types.User
+      Storage.DB.Utils
   other-modules:
       Paths_todo_app
   hs-source-dirs:
       src
+  default-extensions:
+      TypeFamilies
+      TypeSynonymInstances
+      FlexibleInstances
+      DeriveGeneric
+      DeriveAnyClass
+      FlexibleContexts
+      OverloadedStrings
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , beam-core
     , beam-postgres
     , hedis
@@ -45,6 +58,7 @@ library
     , servant-client-core
     , servant-server
     , text
+    , time
     , transformers
     , wai
     , warp
@@ -56,9 +70,18 @@ executable todo-app-exe
       Paths_todo_app
   hs-source-dirs:
       app
+  default-extensions:
+      TypeFamilies
+      TypeSynonymInstances
+      FlexibleInstances
+      DeriveGeneric
+      DeriveAnyClass
+      FlexibleContexts
+      OverloadedStrings
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , beam-core
     , beam-postgres
     , hedis
@@ -68,6 +91,7 @@ executable todo-app-exe
     , servant-client-core
     , servant-server
     , text
+    , time
     , todo-app
     , transformers
     , wai
@@ -81,9 +105,18 @@ test-suite todo-app-test
       Paths_todo_app
   hs-source-dirs:
       test
+  default-extensions:
+      TypeFamilies
+      TypeSynonymInstances
+      FlexibleInstances
+      DeriveGeneric
+      DeriveAnyClass
+      FlexibleContexts
+      OverloadedStrings
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , beam-core
     , beam-postgres
     , hedis
@@ -93,6 +126,7 @@ test-suite todo-app-test
     , servant-client-core
     , servant-server
     , text
+    , time
     , todo-app
     , transformers
     , wai

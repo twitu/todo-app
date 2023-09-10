@@ -14,8 +14,7 @@ type APIs = "todo" :>
     :<|> "delete" :> ReqBody '[JSON] String :> Post '[JSON] String)
   :<|> ApplicationAPIs
  
-type ApplicationAPIs = "application" :>
-  ("app" :> Get '[JSON,PlainText] String )
+type ApplicationAPIs = "application" :> "app" :> Get '[JSON,PlainText] String
 
 create :: String -> Handler String
 create = return

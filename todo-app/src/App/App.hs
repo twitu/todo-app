@@ -12,4 +12,4 @@ app :: Application
 app = serve todoProxy S.todoServer
 
 runServer :: IO ()
-runServer = run 8083 app
+runServer = run 8022 app
