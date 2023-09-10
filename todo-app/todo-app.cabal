@@ -25,7 +25,10 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      App.App
+      App.Server
+      Flow
+      Routes.Routes
   other-modules:
       Paths_todo_app
   hs-source-dirs:
@@ -41,6 +44,8 @@ library
     , servant-client
     , servant-client-core
     , servant-server
+    , text
+    , transformers
     , wai
     , warp
   default-language: Haskell2010
@@ -62,7 +67,9 @@ executable todo-app-exe
     , servant-client
     , servant-client-core
     , servant-server
+    , text
     , todo-app
+    , transformers
     , wai
     , warp
   default-language: Haskell2010
@@ -85,7 +92,9 @@ test-suite todo-app-test
     , servant-client
     , servant-client-core
     , servant-server
+    , text
     , todo-app
+    , transformers
     , wai
     , warp
   default-language: Haskell2010
