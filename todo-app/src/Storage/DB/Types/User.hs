@@ -1,34 +1,31 @@
-{-# Language RecordWildCards #-}
-{-# Language StandaloneDeriving #-}
-
 module Storage.DB.Types.User where
   
 import Data.Aeson
 import Data.Time
-import qualified Database.Beam as B
-import qualified Database.Beam.Schema.Tables as BST
+import qualified Database.Beam as BM
+import qualified Database.Beam.Schema.Tables as B
 import qualified Storage.DB.Utils as DU
 import Data.Text
 
 data UsersT f =
   Users
     {
-      _id :: BST.C f  Text,
-      _name :: BST.C f Text,
-      _email :: BST.C f (Maybe Text),
-      _active :: BST.C f Bool,
-      _createdAt :: BST.C f LocalTime,
-      _updatedAt :: BST.C f LocalTime,
-      _udf :: BST.C f (Maybe Value)
-    } deriving (B.Generic, BST.Beamable)
+      _id :: B.C f  Text,
+      _name :: B.C f Text,
+      _email :: B.C f (Maybe Text),
+      _active :: B.C f Bool,
+      _createdAt :: B.C f LocalTime,
+      _updatedAt :: B.C f LocalTime,
+      _udf :: B.C f (Maybe Value)
+    } deriving (BM.Generic, B.Beamable)
 
-type Users = UsersT B.Identity
+type Users = UsersT BM.Identity
 
-type UsersPrimary = BST.PrimaryKey UsersT B.Identity
+type UsersPrimary = B.PrimaryKey UsersT BM.Identity
 
-instance BST.Table UsersT where
-  data PrimaryKey UsersT f = UsersPrimary (BST.C f Text)
-                             deriving (B.Generic, BST.Beamable)
+instance B.Table UsersT where
+  data PrimaryKey UsersT f = UsersPrimary (B.C f Text)
+                             deriving (BM.Generic, B.Beamable)
   primaryKey = UsersPrimary . _id
 
 deriving instance Show Users
@@ -45,15 +42,15 @@ instance ToJSON Users where
 userEMod :: 
      Text 
   -> Text 
-  -> BST.EntityModification (BST.DatabaseEntity be db) be (BST.TableEntity UsersT)
+  -> B.EntityModification (B.DatabaseEntity be db) be (B.TableEntity UsersT)
 userEMod tableName schema = 
-  BST.setEntitySchema (Just schema) <>
-  BST.setEntityName tableName <>
-  BST.modifyTableFields
-    BST.tableModification
+  B.setEntitySchema (Just schema) <>
+  B.setEntityName tableName <>
+  B.modifyTableFields
+    B.tableModification
       { _id = "id"
       , _name = "name"
-      , _email = "emial"
+      , _email = "email"
       , _active = "active"
       , _createdAt = "createdAt"
       , _updatedAt = "updatedAt"
@@ -62,16 +59,16 @@ userEMod tableName schema =
 
 insertExpression c = insertExpressions [c]
 
-insertExpressions cs = B.insertExpressions (toRowExpression <$> cs)
+insertExpressions cs = BM.insertExpressions (toRowExpression <$> cs)
   where
     toRowExpression Users {..} =
       Users
-        (B.val_ _id)
-        (B.val_ _name)
-        (B.val_ _email)
-        (B.val_ _active)
-        (B.val_ _createdAt)
-        (B.val_ _updatedAt)
-        (B.val_ _udf)
+        (BM.val_ _id)
+        (BM.val_ _name)
+        (BM.val_ _email)
+        (BM.val_ _active)
+        (BM.val_ _createdAt)
+        (BM.val_ _updatedAt)
+        (BM.val_ _udf)
 
 

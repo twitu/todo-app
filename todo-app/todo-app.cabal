@@ -45,6 +45,8 @@ library
       DeriveAnyClass
       FlexibleContexts
       OverloadedStrings
+      RecordWildCards
+      StandaloneDeriving
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       aeson
@@ -78,6 +80,8 @@ executable todo-app-exe
       DeriveAnyClass
       FlexibleContexts
       OverloadedStrings
+      RecordWildCards
+      StandaloneDeriving
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
@@ -113,6 +117,8 @@ test-suite todo-app-test
       DeriveAnyClass
       FlexibleContexts
       OverloadedStrings
+      RecordWildCards
+      StandaloneDeriving
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson

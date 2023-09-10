@@ -27,6 +27,8 @@ default-extensions:
   - DeriveAnyClass
   - FlexibleContexts
   - OverloadedStrings
+  - RecordWildCards
+  - StandaloneDeriving
 
 dependencies:
 - base >= 4.7 && < 5
