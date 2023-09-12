@@ -17,7 +17,7 @@ setExKey :: forall a.
   -> a
   -> F.Flow ()
 setExKey key value = do
-  conn <- liftIO $ KVConf.kvGetConnection
+  conn <- KVConf.kvGetConnection
   resp' <- liftIO $ R.runRedis conn $ R.set (DTE.encodeUtf8 key) (BSL.toStrict $ A.encode value)
   resp <- liftIO $ R.runRedis conn $ R.expire (DTE.encodeUtf8 key) 86400
   return ()
@@ -28,7 +28,7 @@ fetchKey :: forall a.
   => Text
   -> F.Flow (Maybe a)
 fetchKey key = do
-  conn <- liftIO $ KVConf.kvGetConnection
+  conn <- KVConf.kvGetConnection
   resp <- liftIO $ R.runRedis conn $ R.get (DTE.encodeUtf8 key)
   case resp of
     Left err -> CE.throw $ Exp.Exception $ "Unable to fetch from redis :" <> show err
@@ -43,7 +43,7 @@ fetchKey key = do
   
 deleteKey :: Text -> F.Flow (Bool)
 deleteKey key =  do
-  conn <- liftIO $ KVConf.kvGetConnection
+  conn <- KVConf.kvGetConnection
   resp <- liftIO $ R.runRedis conn $ R.del [(DTE.encodeUtf8 key)]
   case resp of
     Left err -> CE.throw $ Exp.Exception $ "Unable to delete key :"  <> show key <> " " <> show err
