@@ -20,3 +20,5 @@ todoDB table schema =
       user = User.userEMod table schema,
       todo = Todo.todoEMod table schema
     }
+
+type DBResult a =  Either Text a

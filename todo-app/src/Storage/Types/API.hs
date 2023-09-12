@@ -1,4 +1,4 @@
-module Storage.API where
+module Storage.Types.API where
 
 import Data.Text
 import Data.Aeson
@@ -49,19 +49,21 @@ data CreateTodoRequest =
 data CreateTodoResponse = 
   CreateTodoResponse
     {
+      id :: Text,
       task :: Text,
       description :: Maybe Text,
       status :: Text,
       createdAt :: LocalTime
     }
+    deriving (Generic,Show,ToJSON,FromJSON) 
 
 data UpdateTodoRequest =
   UpdateTodoRequest
     {
       task :: Text,
       description :: Maybe Text,
-      status :: Maybe Text,
-      active :: Bool
+      status ::  Maybe Text,
+      active :: Maybe Bool
     }
   deriving (Show,Generic,ToJSON,FromJSON) 
 
@@ -79,12 +81,16 @@ data UpdateTodoResponse =
 data FetchAllTaskResponse = 
   FetchAllTaskResponse
     {
-      tasks = [(Text,Text)]
+      tasks :: [(Text,Text)]
     }
   deriving (Show,Generic,ToJSON,FromJSON)  
 
-data FetchDetailsResponse 
+data FetchDetailsResponse =
   FetchDetailsResponse
     {
-      tas
+      task :: Text,
+      description :: Text,
+      status :: Text,
+      active :: Bool
     }
+  deriving (Show,Generic,ToJSON,FromJSON)  

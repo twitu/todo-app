@@ -30,6 +30,9 @@ default-extensions:
   - RecordWildCards
   - StandaloneDeriving
   - DuplicateRecordFields
+  - RankNTypes
+  - NamedFieldPuns
+  - ScopedTypeVariables
 
 dependencies:
 - base >= 4.7 && < 5
@@ -47,6 +50,8 @@ dependencies:
 - text
 - aeson
 - time
+- uuid
+- bytestring
 
 ghc-options:
 - -Wall
