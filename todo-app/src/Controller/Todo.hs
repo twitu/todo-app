@@ -11,16 +11,18 @@ import Control.Monad.IO.Class
 import qualified Data.UUID as UUID
 import qualified Data.UUID.V4 as UUID
 import qualified Utils.DateTime as DateTime
+import qualified External.DummyServer as Dummy
 
 createTask :: SA.CreateTodoRequest -> F.Flow (SA.CreateTodoResponse)
 createTask req@SA.CreateTodoRequest {task,description} = do
   now <- liftIO $ DateTime.getCurrentTimeIST
   id <- liftIO $ UUID.toText <$> UUID.nextRandom
   let status = "PENDING"
+      respBody = SA.CreateTodoResponse id task description status now
   -- dbInsert <- QT.createTask req
   kvInsert <- KVQ.setExKey task $ SA.CreateTodoResponse id task description status now
-  -- send callback to python server for task creation
-  undefined
+  dummyCall <- liftIO $ Dummy.sendAck
+  return respBody
 
 -- updateTask
 
