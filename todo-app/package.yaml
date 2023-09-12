@@ -33,6 +33,8 @@ default-extensions:
   - RankNTypes
   - NamedFieldPuns
   - ScopedTypeVariables
+  - TypeOperators
+  - DataKinds
 
 dependencies:
 - base >= 4.7 && < 5

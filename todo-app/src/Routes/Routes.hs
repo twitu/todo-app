@@ -17,9 +17,9 @@ import Control.Exception
 
 type TodoAPIs = "todo" :>
   ("create" :> ReqBody '[JSON] SA.CreateTodoRequest :> Post '[JSON] (SA.CreateTodoResponse)
-    :<|> "update" :> ReqBody '[JSON] SA.UpdateTodoRequest :> Post '[JSON] (SA.UpdateTodoResponse)
+    :<|> "update" :> ReqBody '[JSON] String :> Post '[JSON] String
     :<|> "fetchAll" :> ReqBody '[JSON] String :> Post '[JSON] String
-    :<|> "getDetails" :> Capture "taskName" Text :> Get '[JSON] SA.FetchDetailsResponse)
+    :<|> "getDetails" :> Capture "taskName" String :> Get '[JSON] String )
  
 type ApplicationAPIs = "application" :> "app" :> Get '[JSON,PlainText] String
 
@@ -34,14 +34,14 @@ type APIs = TodoAPIs  :<|> UserAPIs :<|> ApplicationAPIs
 createTodo :: SA.CreateTodoRequest  -> FlowHandler (SA.CreateTodoResponse)
 createTodo req =  lift $ ExceptT $ try $ runReaderT (CT.createTask req) $ Env "temp"
 
-updateTodo :: SA.UpdateTodoRequest -> FlowHandler (SA.UpdateTodoResponse)
-updateTodo req = return $ CT.updateTask req
+updateTodo :: String-> FlowHandler String
+updateTodo = return 
 
 fetchAllTodo :: String -> FlowHandler String
 fetchAllTodo = return
 
-getDetailsTodo :: Text -> FlowHandler SA.FetchDetailsResponse
-getDetailsTodo taskName = return $ CT.getDetails taskName
+getDetailsTodo :: String ->  FlowHandler String
+getDetailsTodo = return
 
 -- APPLICATION
 appCheck :: FlowHandler String
