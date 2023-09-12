@@ -1,3 +1,4 @@
+{-# LANGUAGE AllowAmbiguousTypes #-}
 module Storage.DB.Queries.Todo where
 
 import qualified Database.Beam.Postgres as BP
@@ -19,15 +20,24 @@ import qualified Database.Beam.Backend as B
 todoTable :: Text -> B.DatabaseEntity be DB.TodoDB (B.TableEntity Todo.TodosT)
 todoTable  = DB.todo . DB.todoDB "Todos"
 
--- createTask ::(B.BeamSqlBackend be, B.MonadBeam be F.Flow) => Text -> SA.CreateTodoRequest -> F.Flow ()
--- createTask req@SA.CreateTodoRequest {task,description} = do
---   conn <- liftIO $ DBConf.dbGetConnection
---   id <- liftIO $ UUID.toText <$> UUID.nextRandom
---   now <- liftIO $ DateTime.getCurrentTimeIST
---   B.runInsert $ B.insert (todoTable "public") $ B.insertValues [ TT.Todos id task description "PENDING" True now now Nothing]
---   return ()
+createTask :: SA.CreateTodoRequest -> F.Flow ()
+createTask req@SA.CreateTodoRequest {task,description} = do
+  todoId <- liftIO $ UUID.toText <$> UUID.nextRandom
+  now <- liftIO $ DateTime.getCurrentTimeIST
+  let todo :: TT.Todos = TT.Todos todoId task description "PENDING" True now now Nothing
+  runQuery $ insertRow (todoTable "public") $ TT.insertExpressions [ todo ]
+  return ()
 
+insertRow ::
+    (B.Beamable table, be ~ BP.Postgres)
+  => B.DatabaseEntity be DB.TodoDB (B.TableEntity table)
+  -> B.SqlInsertValues be (table (B.QExpr be s)) -> BP.Pg ()
+insertRow dbEntity tableRow = B.runInsert $ B.insert dbEntity tableRow
 
+runQuery :: BP.Pg a -> F.Flow a
+runQuery query = do
+  conn <- liftIO $ DBConf.dbGetConnection
+  liftIO $ BP.runBeamPostgres conn query
 
 -- updateTask tableName value = do
 

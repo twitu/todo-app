@@ -2,7 +2,6 @@ module External.DummyServer where
 
 import Servant
 import Servant.Client
-import Servant.API
 import qualified Network.HTTP.Client as HTTP
 
 type SendAck = Get '[JSON] String

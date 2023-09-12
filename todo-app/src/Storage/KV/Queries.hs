@@ -4,8 +4,6 @@ import qualified Database.Redis as R
 import qualified Storage.KV.KVConf as KVConf
 import qualified Data.Text.Encoding as DTE
 import qualified Data.ByteString.Lazy as BSL
-import qualified Data.Aeson as A
-import qualified Data.Text.Encoding as DTE
 import Data.Text
 import qualified Flow as F
 import Control.Monad.IO.Class

@@ -19,7 +19,7 @@ createTask req@SA.CreateTodoRequest {task,description} = do
   id <- liftIO $ UUID.toText <$> UUID.nextRandom
   let status = "PENDING"
       respBody = SA.CreateTodoResponse id task description status now
-  -- dbInsert <- QT.createTask req
+  _ <- QT.createTask req
   kvInsert <- KVQ.setExKey task $ SA.CreateTodoResponse id task description status now
   dummyCall <- liftIO $ Dummy.sendAck
   return respBody

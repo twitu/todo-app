@@ -50,7 +50,7 @@ todoEMod tableName schema =
  B.modifyTableFields
    B.tableModification
      { _id = "id"
-     , _task = "name"
+     , _task = "task"
      , _description = "description"
      , _status = "status"
      , _active = "active"
