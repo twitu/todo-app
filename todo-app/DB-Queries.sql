@@ -1,3 +1,5 @@
+-- create database and add  database name in env , by default its todo-db
+--  Create database todo-db;
 -- Todos Table
 Create Table if not exists "Todos" (
   "id" varchar Primary key not null,
