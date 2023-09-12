@@ -18,3 +18,5 @@
 # Dummy Server
 1. Install Flask
 2. Run `flask --app <dummyCallBack.py location in repo> run`
+
+Note -:  Postgres@12 and redis@6 should be running locally
