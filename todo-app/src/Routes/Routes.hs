@@ -4,7 +4,6 @@ import Servant
 import qualified Storage.Types.API as SA
 import qualified Flow as F
 import qualified Controller.Todo as CT
-import Data.Text
 import Storage.Types.App
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Except
@@ -28,7 +27,7 @@ type APIs = TodoAPIs  :<|> UserAPIs :<|> ApplicationAPIs
 -- TODO
 
 createTodo :: SA.CreateTodoRequest  -> FlowHandler (SA.CreateTodoResponse)
-createTodo req =  lift $ ExceptT $ try $ runReaderT (CT.createTask req) $ Env "temp"
+createTodo req =  flowHandlerWithEnv(CT.createTask req)
 
 updateTodo :: String-> FlowHandler String
 updateTodo = return 
@@ -50,3 +49,8 @@ createUser = return
 
 updateUser :: String -> FlowHandler String
 updateUser = return
+
+flowHandlerWithEnv :: F.Flow a -> FlowHandler a
+flowHandlerWithEnv flowFunc = do
+  env@Env{..} <- ask
+  lift $ ExceptT $ try $ runReaderT flowFunc env

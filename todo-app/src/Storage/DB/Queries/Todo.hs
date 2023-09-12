@@ -10,12 +10,10 @@ import qualified Storage.DB.Types.Todo as TT
 import Data.Text
 import qualified Data.UUID as UUID
 import qualified Data.UUID.V4 as UUID
-import qualified Data.Time as DT
 import qualified Utils.DateTime as DateTime
 import qualified Storage.DB.DBConfig as DBConf
 import Control.Monad.IO.Class
 import qualified Flow as F
-import qualified Database.Beam.Backend as B
 
 todoTable :: Text -> B.DatabaseEntity be DB.TodoDB (B.TableEntity Todo.TodosT)
 todoTable  = DB.todo . DB.todoDB "Todos"
@@ -36,7 +34,7 @@ insertRow dbEntity tableRow = B.runInsert $ B.insert dbEntity tableRow
 
 runQuery :: BP.Pg a -> F.Flow a
 runQuery query = do
-  conn <- liftIO $ DBConf.dbGetConnection
+  conn <- DBConf.dbGetConnection
   liftIO $ BP.runBeamPostgres conn query
 
 -- updateTask tableName value = do

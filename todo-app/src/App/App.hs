@@ -1,13 +1,29 @@
 module App.App where
 
 import Servant
-import qualified Routes.Routes as R
 import qualified App.Server as S
 import Network.Wai.Handler.Warp
-import Storage.Types.App 
+import Storage.Types.App
+import qualified Database.Redis as Redis
+import qualified Data.Text.Encoding as DTE
+import qualified Config.Types  as Conf
+import qualified Config.Config as CC
 
-app :: Application
-app = serve S.todoProxy . S.todoServer $ Env "Testing"
+app :: Env -> Application
+app = serve S.todoProxy . S.todoServer
 
 runServer :: IO ()
-runServer = run 8022 app
+runServer = do
+  conf <- CC.config
+  let env = Env conf
+  getKvConnection <- prepareKVConnection (Conf.kvConfig conf) (Conf.isRedisClusterEnabled conf)
+  run (Conf.port conf) (app env)
+
+
+
+prepareKVConnection :: Redis.ConnectInfo -> Bool -> IO ()
+prepareKVConnection redisConf isClusterEnabled = do
+  conn <- if  isClusterEnabled then Redis.connectCluster redisConf else Redis.connect redisConf
+  Redis.runRedis conn $ Redis.set (DTE.encodeUtf8 "dummy_testing") "dummy"
+  return ()
+

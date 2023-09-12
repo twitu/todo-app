@@ -27,6 +27,8 @@ library
   exposed-modules:
       App.App
       App.Server
+      Config.Config
+      Config.Types
       Controller.Todo
       Exception
       External.DummyServer
@@ -63,13 +65,14 @@ library
       ScopedTypeVariables
       TypeOperators
       DataKinds
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Werror=unused-imports
   build-depends:
       aeson
     , base >=4.7 && <5
     , beam-core
     , beam-postgres
     , bytestring
+    , containers
     , hedis
     , http-client
     , servant
@@ -106,13 +109,14 @@ executable todo-app-exe
       ScopedTypeVariables
       TypeOperators
       DataKinds
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Werror=unused-imports -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
     , base >=4.7 && <5
     , beam-core
     , beam-postgres
     , bytestring
+    , containers
     , hedis
     , http-client
     , servant
@@ -151,13 +155,14 @@ test-suite todo-app-test
       ScopedTypeVariables
       TypeOperators
       DataKinds
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Werror=unused-imports -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
     , base >=4.7 && <5
     , beam-core
     , beam-postgres
     , bytestring
+    , containers
     , hedis
     , http-client
     , servant

@@ -33,4 +33,3 @@ todoAPI = R.createTodo :<|> R.updateTodo :<|> R.fetchAllTodo :<|> R.getDetailsTo
 userAPI = R.createUser :<|> R.updateUser
 
 applicationAPI = R.appCheck
-

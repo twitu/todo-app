@@ -1,9 +1,11 @@
 module Storage.DB.DBConfig where
 
 import Database.Beam.Postgres as BP
+import qualified Flow as F
+import qualified Config.Types  as Conf
+import Control.Monad.IO.Class
 
-dbConnectionInfo :: BP.ConnectInfo
-dbConnectionInfo = BP.ConnectInfo "localhost" 5432 "cloud" "scape" "todo-db"
-
-dbGetConnection :: IO (BP.Connection)
-dbGetConnection =  BP.connect dbConnectionInfo
+dbGetConnection :: F.Flow (BP.Connection)
+dbGetConnection =  do
+  conf <- F.getConfig
+  liftIO $ BP.connect $ Conf.dbConfig conf
