@@ -6,6 +6,8 @@ import Storage.Types.App
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Except
 import Control.Monad.IO.Class
+import qualified Exception as Exp
+import qualified Control.Exception as CE
 
 type FlowServer = 
   ServerT R.APIs (ReaderT Env (ExceptT ServerError IO))
@@ -20,7 +22,7 @@ todoServer env = hoistServer todoProxy (f env ) todoServers'
     f env' r = do
       eResult <- liftIO $ runExceptT $ runReaderT r env'
       case eResult  of
-        Left err -> undefined
+        Left err -> CE.throw $ Exp.Exception $ "Unable to Start Server :" <> show err
         Right res -> pure res
 
 todoServers' :: FlowServer        

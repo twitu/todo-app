@@ -28,6 +28,7 @@ library
       App.App
       App.Server
       Controller.Todo
+      Exception
       External.DummyServer
       Flow
       Routes.Routes

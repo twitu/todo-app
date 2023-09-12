@@ -10,6 +10,8 @@ import Data.Text
 import qualified Flow as F
 import Control.Monad.IO.Class
 import qualified Data.Aeson as A
+import qualified Exception as Exp
+import qualified Control.Exception as CE
 
 setExKey :: forall a.
   A.ToJSON a 
@@ -31,13 +33,13 @@ fetchKey key = do
   conn <- liftIO $ KVConf.kvGetConnection
   resp <- liftIO $ R.runRedis conn $ R.get (DTE.encodeUtf8 key)
   case resp of
-    Left err -> undefined
+    Left err -> CE.throw $ Exp.Exception $ "Unable to fetch from redis :" <> show err
     Right res -> 
         case res of
           Nothing -> return Nothing
           Just resp -> 
             case A.decodeStrict resp of
-              Nothing -> undefined
+              Nothing -> CE.throw $ Exp.Exception $ "Unable to decode Aeson :" 
               Just r -> return $ Just r
 
   
@@ -46,7 +48,7 @@ deleteKey key =  do
   conn <- liftIO $ KVConf.kvGetConnection
   resp <- liftIO $ R.runRedis conn $ R.del [(DTE.encodeUtf8 key)]
   case resp of
-    Left err -> undefined
+    Left err -> CE.throw $ Exp.Exception $ "Unable to delete key :"  <> show key <> " " <> show err
     Right val -> if val == 1 then return True else return False
 
 iskeyExists key = do
