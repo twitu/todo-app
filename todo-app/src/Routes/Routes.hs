@@ -9,6 +9,7 @@ import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Except
 import Control.Monad.Trans.Class
 import Control.Exception
+import Control.Monad.IO.Class
 
 type TodoAPIs = "todo" :>
   ("create" :> ReqBody '[JSON] SA.CreateTodoRequest :> Post '[JSON] (SA.CreateTodoResponse)
@@ -27,7 +28,9 @@ type APIs = TodoAPIs  :<|> UserAPIs :<|> ApplicationAPIs
 -- TODO
 
 createTodo :: SA.CreateTodoRequest  -> FlowHandler (SA.CreateTodoResponse)
-createTodo req =  flowHandlerWithEnv(CT.createTask req)
+createTodo req =  do
+  liftIO $ putStrLn  $ "createTODO API called " <> show req
+  flowHandlerWithEnv(CT.createTask req)
 
 updateTodo :: String-> FlowHandler String
 updateTodo = return 
