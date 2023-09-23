@@ -8,6 +8,7 @@ import qualified Database.Redis as Redis
 import qualified Data.Text.Encoding as DTE
 import qualified Config.Types  as Conf
 import qualified Config.Config as CC
+import qualified  Middleware.Middleware as Middleware
 
 app :: Env -> Application
 app = serve S.todoProxy . S.todoServer
@@ -17,9 +18,7 @@ runServer = do
   conf <- CC.config
   let env = Env conf
   getKvConnection <- prepareKVConnection (Conf.kvConfig conf) (Conf.isRedisClusterEnabled conf)
-  run (Conf.port conf) (app env)
-
-
+  run (Conf.port conf) $ Middleware.customMiddleware $ app env
 
 prepareKVConnection :: Redis.ConnectInfo -> Bool -> IO ()
 prepareKVConnection redisConf isClusterEnabled = do

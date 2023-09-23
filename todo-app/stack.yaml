@@ -43,6 +43,8 @@ packages:
 #
 # extra-deps: []
 
+allow-newer: true
+
 extra-deps:
   - git: https://github.com/juspay/beam
     commit: 2c27db3d4c132890919573b636ccdf8ed74788fa
