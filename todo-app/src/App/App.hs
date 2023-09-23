@@ -18,6 +18,7 @@ runServer = do
   conf <- CC.config
   let env = Env conf
   getKvConnection <- prepareKVConnection (Conf.kvConfig conf) (Conf.isRedisClusterEnabled conf)
+  putStrLn $ "APP is Running :" <> show (Conf.port conf)
   run (Conf.port conf) $ Middleware.customMiddleware $ app env
 
 prepareKVConnection :: Redis.ConnectInfo -> Bool -> IO ()

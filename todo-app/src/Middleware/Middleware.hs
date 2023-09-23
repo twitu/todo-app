@@ -12,7 +12,7 @@ customMiddleware app request response = do
         atomicModifyIORef ichunks $ \case
           [] -> ([], CH.empty)
           x:y -> (y, x)
-  let injectedRequest = request {NW.requestBody = putStrLn "reading" >> rbody} -- injected back the request
+  let injectedRequest = request {NW.requestBody = rbody} -- injected back the request
   app injectedRequest response
   where
     readBodyFromStream front = do
